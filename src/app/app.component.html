@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div formGroupName="userData">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" formControlName="username" id="username" class="form-control">
+                        <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched">
+                            <span *ngIf="signupForm.get('userData.username').errors['forbiddenName']">Invalid username</span>
+                        <span *ngIf="signupForm.get('userData.username').errors['required']">Field is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">email</label>
+                        <input type="text" id="email" formControlName="email" class="form-control">
+                        <p *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">Invalid email
+                        </p>
+                    </div>
+                </div>
+                <div class="radio" *ngFor="let gender of genders">
+                    <label>
+            <input type="radio" [value]="gender" formControlName="gender">{{ gender }}
+          </label>
+                </div>
+                <div formArrayName="hobbies">
+                    <h4>Hobbies</h4>
+                    <button class="btn btn-default" type="button" (click)="onAddHobbies()">Add Hobby</button>
+                    <hr>
+                    <div class="form-group" *ngFor="let hobbies of controls; let i = index">
+                        <input type="text" class="form-control" [formControlName]="i">
+                    </div>
+                </div>
+                <p *ngIf="!signupForm.valid && signupForm.touched">Please enter valid Data</p>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
